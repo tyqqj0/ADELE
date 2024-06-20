@@ -4,7 +4,7 @@ import numpy as np
 import torch.nn.functional as F
 from utils.registry import BACKBONES
 
-model_url='/scratch/kl3141/seam/SEAM-master/model_weight/ilsvrc-cls_rna-a1_cls1000_ep-0001.params'
+model_url='D:\\gkw\\cod\\ADELE\\model\\ilsvrc-cls_rna-a1_cls1000_ep-0001.params'
 bn_mom = 0.0003
 
 class ResBlock(nn.Module):
@@ -268,5 +268,5 @@ def resnet38(pretrained=False, norm_layer=nn.BatchNorm2d, **kwargs):
     model = Net(norm_layer)
     if pretrained:
         weight_dict = convert_mxnet_to_torch(model_url)
-        model.load_state_dict(weight_dict,strict=False) 
+        model.load_state_dict(weight_dict,strict=False)
     return model

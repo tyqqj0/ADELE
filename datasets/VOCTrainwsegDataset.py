@@ -25,7 +25,7 @@ class VOCTrainwsegDataset(BaseMultiwGTauginfoDataset):
     def __init__(self, cfg, period, transform='none'):
         super(VOCTrainwsegDataset, self).__init__(cfg, period, transform)
         self.dataset_name = 'VOC%d' % cfg.DATA_YEAR
-        self.root_dir = os.path.join(cfg.ROOT_DIR, 'data', 'VOCdevkit')
+        self.root_dir = os.path.join(cfg.ROOT_DIR, 'VOCdevkit')
         self.dataset_dir = os.path.join(self.root_dir, self.dataset_name)
         self.rst_dir = os.path.join(self.root_dir, 'results', self.dataset_name, 'Segmentation')
         self.eval_dir = os.path.join(self.root_dir, 'eval_result', self.dataset_name, 'Segmentation')
@@ -42,9 +42,9 @@ class VOCTrainwsegDataset(BaseMultiwGTauginfoDataset):
 
         file_name = None
         if cfg.DATA_AUG and 'train' in self.period:
-            file_name = self.set_dir + '/' + period + 'aug.txt'
+            file_name = self.set_dir + '\\' + period + 'aug.txt'
         else:
-            file_name = self.set_dir + '/' + period + '.txt'
+            file_name = self.set_dir + '\\' + period + '.txt'
         df = pd.read_csv(file_name, names=['filename'])
         self.name_list = df['filename'].values
         # print(self.name_list[1])
@@ -67,7 +67,7 @@ class VOCTrainwsegDataset(BaseMultiwGTauginfoDataset):
     def init_seg_dict(self):
         for idx in range(len(self.name_list)):
             name = self.name_list[idx]
-            seg_file = self.pseudo_gt_dir + '/' + name + '.png'
+            seg_file = self.pseudo_gt_dir + '\\' + name + '.png'
 
             segmentation1 = Image.open(seg_file)
 
@@ -378,7 +378,7 @@ class VOCTrainwsegDataset(BaseMultiwGTauginfoDataset):
         return loglist
 
     def do_python_eval_batch_pseudo_one_process(self):
-        self.seg_dir_gt = os.path.join(self.dataset_dir, 'SegmentationClassAug')
+        self.seg_dir_gt = os.path.join(self.dataset_dir, 'SegmentationClass')
         gt_folder = self.seg_dir_gt
         TP_gt_epoch = [0] * 21
         P_gt_epoch = [0] * 21

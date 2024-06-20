@@ -373,13 +373,13 @@ class ToTensor(object):
 				sample['edge'] = torch.unsqueeze(sample['edge'],0)
 			elif 'segmentation' == key:
 				segmentation = sample['segmentation']
-				sample['segmentation'] = torch.from_numpy(segmentation.astype(np.long))
+				sample['segmentation'] = torch.from_numpy(segmentation.astype(np.float32))
 
 			elif 'segmentation2' == key or 'segmentation3' == key or 'segmentationgt' == key:
 				# segmentation = sample['segmentation2']
-				# sample['segmentation2'] = torch.from_numpy(segmentation.astype(np.long))
+				# sample['segmentation2'] = torch.from_numpy(segmentation.astype(np.float64))
 				segmentation = sample[key]
-				sample[key] = torch.from_numpy(segmentation.astype(np.long))
+				sample[key] = torch.from_numpy(segmentation.astype(np.float32))
 
 			elif 'segmentation_pseudo' in key:
 				segmentation_pseudo = sample[key]

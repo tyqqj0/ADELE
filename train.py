@@ -145,7 +145,7 @@ def get_arguments():
 
     # Comet
     parser.add_argument('--api_key', type=str,
-                        default='',
+                        default='Y50elbVVI0aCJKFtv1o8mCKLW',
                         help="The api_key of Comet")
     parser.add_argument('--online', type=str2bool, nargs='?',
                         const=True, default=True,
@@ -187,8 +187,8 @@ def if_update(iou_value, current_epoch, threshold=0.90):
 def train_net():
     args = get_arguments()
 
-    cfg.MODEL_SAVE_DIR = os.path.join(cfg.ROOT_DIR, 'model', args.EXP_NAME)
-    cfg.LOG_DIR = os.path.join(cfg.ROOT_DIR, 'log', args.EXP_NAME)
+    cfg.MODEL_SAVE_DIR = os.path.join("D:\\gkw\\cod\\ADELE", 'model', args.EXP_NAME)
+    cfg.LOG_DIR = os.path.join("D:\\gkw\\cod\\ADELE", 'log', args.EXP_NAME)
     cfg.DATA_PSEUDO_GT = args.DATA_PSEUDO_GT
     cfg.DATA_NAME = 'VOCTrainwsegDataset'
     cfg.TRAIN_LR = args.TRAIN_LR
@@ -312,12 +312,13 @@ def train_net():
     net_state_dict = net.state_dict()
     new_state_dict = OrderedDict()
     for k, v in net_state_dict.items():
-        name = k[7:]  # remove `module.`
-        new_state_dict[name] = v
+        # k = k[7:]  # remove `module.`
+        new_state_dict[k] = v
+    # print(new_state_dict.keys())
     net1.load_state_dict(new_state_dict, strict=True)
-    net1.to(torch.device(0))
+    net1.cuda()
     net2.load_state_dict(new_state_dict, strict=True)
-    net2.to(torch.device(1))
+    net2.cuda()
     del new_state_dict
 
     weight = nn.Parameter(torch.Tensor(3))

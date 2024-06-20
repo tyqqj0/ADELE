@@ -43,9 +43,12 @@ def calc_jsd_multiscale(weight, labels1_a, pred1, pred2, pred3, threshold=0.8, M
     criterion2 = nn.CrossEntropyLoss(ignore_index=255, reduction='none')
     criterion3 = nn.CrossEntropyLoss(ignore_index=255, reduction='none')
 
-    loss1 = criterion1(pred1 * weight_softmax[0], labels1_a)  # * weight_softmax[0]
-    loss2 = criterion2(pred2 * weight_softmax[1], labels1_a)  # * weight_softmax[1]
-    loss3 = criterion3(pred3 * weight_softmax[2], labels1_a)  # * weight_softmax[2]
+    # loss1 = criterion1((pred1 * weight_softmax[0]).long(), labels1_a.long())  # * weight_softmax[0]
+    # loss2 = criterion2((pred2 * weight_softmax[1]).long(), labels1_a.long())  # * weight_softmax[1]
+    # loss3 = criterion3((pred3 * weight_softmax[2]).long(), labels1_a.long())  # * weight_softmax[2]
+    loss1 = criterion1((pred1 * weight_softmax[0]), labels1_a)  # * weight_softmax[0]
+    loss2 = criterion2((pred2 * weight_softmax[1]), labels1_a)  # * weight_softmax[1]
+    loss3 = criterion3((pred3 * weight_softmax[2]), labels1_a)  # * weight_softmax[2]
 
     loss = (loss1 + loss2 + loss3)
 
